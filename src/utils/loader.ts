@@ -1,0 +1,44 @@
+import { redirect, type LoaderFunction } from "react-router";
+import { store } from "../store";
+import { getUser } from "../store/slices/auth/actions";
+import { setToken } from "../store/slices/auth";
+import { getById, list } from "../store/slices/slides/actions";
+
+const getToken = () => {
+  const token = localStorage.getItem("access-token");
+  return token;
+};
+
+export const indexLoader: LoaderFunction = async () => {
+  const token = getToken() || store.getState().auth.token;
+  if (!token) {
+    return redirect("/auth/login");
+  }
+  store.dispatch(setToken(token));
+  await store.dispatch(getUser());
+  store.dispatch(
+    list({
+      page: 1,
+      name: "",
+    })
+  );
+  return null;
+};
+
+export const authLoader: LoaderFunction = ({ request }) => {
+  const { pathname } = new URL(request.url);
+  if (pathname === "/auth") {
+    return redirect("/auth/login");
+  }
+  const token = getToken() || store.getState().auth.token;
+  if (token) {
+    return redirect("/");
+  }
+  return null;
+};
+
+export const editSlideLoader: LoaderFunction = ({ params }) => {
+  const { id } = params;
+  store.dispatch(getById(id!));
+  return null;
+};

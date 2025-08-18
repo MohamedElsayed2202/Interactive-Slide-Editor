@@ -1,0 +1,23 @@
+.slides_page {
+  margin: 3rem 9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.page_name {
+  font-family: var(--font-inter) !important;
+  color: #28335b !important;
+  font-size: 35px !important;
+}
+
+.table_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.5rem;
+  width: 100%;
+}

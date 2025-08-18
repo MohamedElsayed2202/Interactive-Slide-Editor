@@ -1,0 +1,29 @@
+.table_container {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.table {
+  border-collapse: separate !important;
+  border-spacing: 10px 15px !important;
+}
+
+.table_head_cell {
+  background-color: #28335b !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+.table_body_cell {
+  background-color: #F2F2F2 !important;
+  color: #999999 !important;
+  border-radius: 6px !important;
+}
+
+.table_edit_cell {
+  text-align: center !important;
+}
+
+.table_edit_cell img {
+  cursor: pointer;
+}

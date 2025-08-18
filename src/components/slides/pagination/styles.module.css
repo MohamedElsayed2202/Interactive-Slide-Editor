@@ -1,0 +1,28 @@
+.pagination_btns {
+  color: #28335b !important;
+  font-family: var(--font-poppins) !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+}
+.pagination_btns span {
+  color: #28335b !important;
+  font-size: 11px !important;
+}
+.active_item,
+.active_item a {
+  background-color: #28335b !important;
+  color: #ffffff !important;
+  font-family: var(--font-poppins) !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+}
+
+.active_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active_item a {
+  border: none !important;
+}

@@ -1,0 +1,25 @@
+.list_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.item_container {
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.item_name {
+  font-family: var(--font-poppins) !important;
+  color: #28335b !important;
+  font-weight: 600 !important;
+}
+
+.image_body_container {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}

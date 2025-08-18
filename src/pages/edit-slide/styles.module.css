@@ -1,0 +1,16 @@
+.edit_slide_page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.left_section {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+.right_section {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}

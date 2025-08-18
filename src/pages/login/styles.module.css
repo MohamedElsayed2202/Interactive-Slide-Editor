@@ -1,0 +1,48 @@
+.login_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 649px;
+  height: 588px;
+  border-radius: 60px !important;
+  border: 2px solid #f2f2f2;
+  box-shadow: 0 3px 3px #00000029 !important;
+}
+
+.form_container {
+  width: 100%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.form_header {
+  color: #28335b !important;
+  font-size: 49px !important;
+  font-weight: 600 !important;
+}
+
+.link {
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.submit_btn {
+  font-family: var(--font-poppins) !important;
+  font-size: 27px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  background-color: #dca126 !important;
+}
+
+.error_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red !important;
+}

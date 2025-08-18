@@ -1,0 +1,39 @@
+.filter_container {
+  width: 100%;
+  /* height: 110px; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  padding: 2rem;
+}
+
+.filter_lable {
+  color: #28335b !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+}
+
+.input_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn {
+  font-family: var(--font-inter) !important;
+  background-color: #dca126 !important;
+  padding: 9px 45px !important;
+  font-size: 16px !important;
+  text-transform: none !important;
+}
+
+.btn:hover {
+  background-color: #dca126 !important;
+}
