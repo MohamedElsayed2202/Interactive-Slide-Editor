@@ -12,7 +12,7 @@
 }
 
 .filter_lable {
-  color: #28335b !important;
+  color: var(--primary-color) !important;
   font-family: var(--font-poppins) !important;
   font-size: 17px !important;
   font-weight: 600 !important;
@@ -32,8 +32,21 @@
   padding: 9px 45px !important;
   font-size: 16px !important;
   text-transform: none !important;
+  color: #ffffff !important;
 }
 
 .btn:hover {
+  background-color: #dca126 !important;
+}
+
+.search_btn {
+  background-color: #dca126 !important;
+  /* padding: 6px 16px !important; */
+  width: 61px;
+  height: 45px;
+  border-radius: 5px !important;
+  color: #ffffff !important;
+}
+.search_btn:hover {
   background-color: #dca126 !important;
 }

@@ -20,7 +20,7 @@
 }
 
 .form_header {
-  color: #28335b !important;
+  color: var(--primary-color) !important;
   font-size: 49px !important;
   font-weight: 600 !important;
 }

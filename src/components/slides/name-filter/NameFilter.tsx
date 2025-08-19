@@ -1,10 +1,10 @@
 import {
-    Box,
-    Button,
-    IconButton,
-    InputAdornment,
-    TextField,
-    Typography,
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
 } from "@mui/material";
 import styles from "./styles.module.css";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store-hooks";
@@ -13,8 +13,12 @@ import type { ChangeEvent } from "react";
 import { setName } from "../../../store/slices/slides";
 import { list } from "../../../store/slices/slides/actions";
 
-export default function NameFilter() {
-  const { filterData } = useAppSelector((store) => store.slide);
+interface Props {
+  onlyIcon?: boolean;
+}
+
+export default function NameFilter({ onlyIcon }: Props) {
+  const { queryData: filterData } = useAppSelector((store) => store.slide);
   const dispatch = useAppDispatch();
 
   const handleChange = (
@@ -80,15 +84,25 @@ export default function NameFilter() {
             },
           }}
         />
-        <Button
-          variant="contained"
-          startIcon={<Search />}
-          className={styles.btn}
-          disabled={filterData.name.length === 0}
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
+        {!onlyIcon ? (
+          <Button
+            variant="contained"
+            startIcon={<Search />}
+            className={styles.btn}
+            disabled={filterData.name.length === 0}
+            onClick={handleSearch}
+          >
+            {!onlyIcon && "Search"}
+          </Button>
+        ) : (
+          <IconButton
+            onClick={handleSearch}
+            className={styles.search_btn}
+            disabled={filterData.name.length === 0}
+          >
+            <Search />
+          </IconButton>
+        )}
       </Box>
     </Box>
   );

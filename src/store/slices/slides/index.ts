@@ -1,11 +1,16 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Slide, SlideState } from "../../../utils/interfaces";
-import { getById, list } from "./actions";
+import type {
+  Background,
+  Element,
+  Slide,
+  SlideState,
+} from "../../../utils/interfaces";
+import { addMedia, getById, getMedia, list } from "./actions";
 
 const initialState: SlideState = {
   records: [],
   totalPages: 0,
-  filterData: {
+  queryData: {
     name: "",
     page: 1,
   },
@@ -20,6 +25,22 @@ const initialState: SlideState = {
     success: false,
   },
   record: {} as Slide,
+  type: "image",
+  media: [],
+  getMediaState: {
+    error: null,
+    loading: false,
+    success: false,
+  },
+  currentElement: {} as Element,
+  elements: [],
+  typedText: "",
+  addMediaState: {
+    error: null,
+    loading: false,
+    success: false,
+  },
+  backgrounds: [],
 };
 
 const slideSlice = createSlice({
@@ -27,10 +48,25 @@ const slideSlice = createSlice({
   initialState,
   reducers: {
     setPage: (state, { payload }: PayloadAction<number>) => {
-      state.filterData.page = payload;
+      state.queryData.page = payload;
     },
     setName: (state, { payload }: PayloadAction<string>) => {
-      state.filterData.name = payload;
+      state.queryData.name = payload;
+    },
+    setType: (state, { payload }: PayloadAction<"text" | "image">) => {
+      state.type = payload;
+    },
+    setNewElement: (state, { payload }: PayloadAction<Element>) => {
+      state.elements.push(payload);
+    },
+    setNewBackground: (state, { payload }: PayloadAction<Background>) => {
+      state.backgrounds.push(payload);
+    },
+    setCurrentElement: (state, { payload }: PayloadAction<Element>) => {
+      state.currentElement = payload;
+    },
+    setTypedText: (state, { payload }: PayloadAction<string>) => {
+      state.typedText = payload;
     },
   },
   extraReducers: (builder) => {
@@ -69,9 +105,50 @@ const slideSlice = createSlice({
         state.getState.loading = false;
         state.getState.success = false;
       });
+    builder
+      .addCase(getMedia.pending, (state) => {
+        state.getMediaState.error = null;
+        state.getMediaState.loading = true;
+        state.getMediaState.success = false;
+      })
+      .addCase(getMedia.fulfilled, (state, { payload }) => {
+        state.media = payload;
+        state.getMediaState.error = null;
+        state.getMediaState.loading = false;
+        state.getMediaState.success = true;
+      })
+      .addCase(getMedia.rejected, (state, { payload }) => {
+        state.getMediaState.error = payload?.message as string;
+        state.getMediaState.loading = false;
+        state.getMediaState.success = false;
+      });
+    builder
+      .addCase(addMedia.pending, (state) => {
+        state.addMediaState.error = null;
+        state.addMediaState.loading = true;
+        state.addMediaState.success = false;
+      })
+      .addCase(addMedia.fulfilled, (state) => {
+        state.addMediaState.error = null;
+        state.addMediaState.loading = false;
+        state.addMediaState.success = true;
+      })
+      .addCase(addMedia.rejected, (state, { payload }) => {
+        state.addMediaState.error = payload?.message as string;
+        state.addMediaState.loading = false;
+        state.addMediaState.success = false;
+      });
   },
 });
 
-export const { setPage, setName } = slideSlice.actions;
+export const {
+  setPage,
+  setName,
+  setType,
+  setCurrentElement,
+  setNewElement,
+  setTypedText,
+  setNewBackground,
+} = slideSlice.actions;
 const slideReducer = slideSlice.reducer;
 export default slideReducer;

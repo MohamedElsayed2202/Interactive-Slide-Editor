@@ -1,6 +1,7 @@
 :root {
   --font-inter: "Inter", sans-serif;
   --font-poppins: "Poppins", sans-serif;
+  --primary-color: #28335b;
 }
 
 * {
@@ -12,4 +13,8 @@
 body {
   font-family: var(--font-poppins);
   width: 100%;
+}
+
+.tox-statusbar {
+  display: none !important;
 }

@@ -80,7 +80,7 @@ export default function CustomeFormikTextField(props: Props) {
             position: "revert",
             fontFamily: "var(--font-poppins)",
             fontSize: "23px",
-            color: "#28335B",
+            color: "var(--primary-color)",
           },
         },
       }}
@@ -102,7 +102,7 @@ export default function CustomeFormikTextField(props: Props) {
           },
         },
         "& .MuiInputLabel-root.Mui-focused:not(.Mui-error)": {
-          color: "#28335B", // label color on focus (no error)
+          color: "var(--primary-color)", // label color on focus (no error)
         },
       }}
     />

@@ -8,7 +8,11 @@ export default function SlidesList() {
   return (
     <Box component={"div"} className={styles.list_container}>
       {records.map((item) => (
-        <SlideListItem item={item} currentSelectedId={record?.id} />
+        <SlideListItem
+          key={item.id}
+          item={item}
+          currentSelectedId={record?.id}
+        />
       ))}
     </Box>
   );

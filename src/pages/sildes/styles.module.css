@@ -9,7 +9,7 @@
 
 .page_name {
   font-family: var(--font-inter) !important;
-  color: #28335b !important;
+  color: var(--primary-color) !important;
   font-size: 35px !important;
 }
 

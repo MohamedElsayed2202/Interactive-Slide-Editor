@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type {
   ErrorResponse,
-  ExtraModification,
   FilterData,
   ListPayload,
+  Media,
   Slide,
 } from "../../../utils/interfaces";
 import { isAxiosError } from "axios";
@@ -36,16 +36,12 @@ export const list = createAsyncThunk<ListPayload, FilterData, ErrorResponse>(
   }
 );
 
-export const getById = createAsyncThunk<Slide, string, ExtraModification>(
+export const getById = createAsyncThunk<Slide, string, ErrorResponse>(
   "slides/get-by-id",
-  async (id, { getState, rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const state = getState();
-      const record = state.slide.records.find((r) => r.id === id);
-      await new Promise((res) => setTimeout(res, 500));
-      if (!record) {
-        return rejectWithValue({ message: `Slide with id ${id} not found` });
-      }
+      const { data } = await axiosInstance.get(`slides/${id}`);
+      const record = data.slide;
       return record;
     } catch (error) {
       if (isAxiosError(error)) {
@@ -55,3 +51,51 @@ export const getById = createAsyncThunk<Slide, string, ExtraModification>(
     }
   }
 );
+
+export const getMedia = createAsyncThunk<Media[], string, ErrorResponse>(
+  "slides/get-media",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(`media-of-slide/${id}`, {
+        params: {
+          type: "image",
+        },
+      });
+      const record = data.records.data;
+      return record;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return rejectWithValue(error?.response?.data);
+      }
+      return rejectWithValue({ message: "An unknown error occurred" });
+    }
+  }
+);
+
+export const addMedia = createAsyncThunk<
+  Media,
+  { id: string; body: FormData },
+  ErrorResponse
+>("slides/add-media", async ({ id, body }, { rejectWithValue, dispatch }) => {
+  try {
+    const { data } = await axiosInstance.post(
+      `attach-media-to-slide/${id}`,
+      body,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (data.message) {
+      dispatch(getMedia(id));
+    }
+    const record = data.message;
+    return record;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return rejectWithValue(error?.response?.data);
+    }
+    return rejectWithValue({ message: "An unknown error occurred" });
+  }
+});

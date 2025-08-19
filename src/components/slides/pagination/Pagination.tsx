@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 import "react-responsive-pagination/themes/classic.css";
 
 export default function Pagination() {
-  const { filterData, totalPages } = useAppSelector((store) => store.slide);
+  const { queryData: filterData, totalPages } = useAppSelector((store) => store.slide);
   const dispatch = useAppDispatch();
   const handleChangePage = (number: number) => {
     dispatch(setPage(number));

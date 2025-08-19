@@ -75,7 +75,7 @@ export interface Slide {
   slideTime: string | null;
   background: string | null;
   elements: any[];
-  screenshot: string | null;
+  screenshot: Media | null;
   master: string | null;
 }
 
@@ -108,6 +108,12 @@ interface AssignedTo {
   builder_id: number;
 }
 
+export interface Media {
+  id: number;
+  path: string;
+  type: string;
+}
+
 export interface ErrorResponse {
   rejectValue: { message: string };
 }
@@ -120,7 +126,7 @@ export interface FilterData {
 export interface SlideState {
   records: Slide[];
   totalPages: number;
-  filterData: FilterData;
+  queryData: FilterData;
   listState: {
     error: null | string;
     loading: boolean;
@@ -131,7 +137,40 @@ export interface SlideState {
     loading: boolean;
     success: boolean;
   };
+  getMediaState: {
+    error: null | string;
+    loading: boolean;
+    success: boolean;
+  };
+  addMediaState: {
+    error: null | string;
+    loading: boolean;
+    success: boolean;
+  };
   record: Slide;
+  type: "text" | "image";
+  media: Media[];
+  elements: Element[];
+  currentElement: Element;
+  typedText: string;
+  backgrounds: Background[];
+}
+
+export interface Element {
+  id: string;
+  slideId: string;
+  type: "text" | "image";
+  content: string;
+  width?: number;
+  heigh?: number;
+  x_position: number;
+  y_position: number;
+  z_index: number;
+}
+
+export interface Background {
+  slideId: string;
+  path: string;
 }
 
 export interface ListPayload {

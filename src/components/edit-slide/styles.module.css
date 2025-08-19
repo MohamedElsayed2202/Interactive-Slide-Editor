@@ -1,0 +1,235 @@
+.edit_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.right_side {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left_side {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add_contianer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+
+.add_contianer_header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.label {
+  font-family: var(--font-poppins) !important;
+  font-weight: 700 !important;
+  color: var(--primary-color) !important;
+  font-size: 31px !important;
+  text-transform: uppercase;
+}
+
+.switches_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.btns {
+  background-color: #cecece !important;
+  color: #4d4d4d !important;
+  font-family: var(--font-poppins) !important;
+  font-size: 17px !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  padding: 0.5rem 3rem !important;
+  box-shadow: none !important;
+}
+
+.active {
+  background-color: #a5bfe5 !important;
+}
+
+.add_contianer_footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form_lable {
+  font-family: var(--font-inter) !important;
+  font-size: 22px !important;
+  color: #707070 !important;
+}
+
+.input_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.input {
+  flex-basis: 45%;
+}
+
+.add_footer_form {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #cecece;
+  border: 1px solid #707070;
+  border-radius: 15px;
+}
+
+.add_footer_btn {
+  width: 100%;
+  background-color: var(--primary-color) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  font-family: var(--font-poppins);
+  font-size: 17px !important;
+  font-weight: 600 !important;
+}
+
+.add_footer_btn:hover {
+  background-color: var(--primary-color) !important;
+}
+
+.body_contianer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.editor_wrapper {
+  width: 100%;
+}
+
+.images_section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.input_image_container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #707070;
+  border-radius: 15px;
+  height: 50px;
+}
+
+.input_image_container input {
+  display: none;
+}
+
+.upload_btn {
+  background-color: var(--primary-color) !important;
+  font-family: var(--font-inter) !important;
+  font-size: 22px !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  border-radius: 0 !important;
+  position: relative;
+  left: -2px;
+  border-bottom-right-radius: 15px !important;
+  border-top-left-radius: 15px !important;
+}
+
+.upload_btn:hover {
+  background-color: var(--primary-color) !important;
+}
+
+.images_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.image_wrapper {
+  flex-basis: 223px;
+  height: 157px;
+  position: relative;
+  background-color: #b8b8b8;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #707070;
+}
+
+.image_wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btns_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.image_btn {
+  background-color: var(--primary-color) !important;
+  border: 1px solid #707070 !important;
+  font-family: var(--font-poppins) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  border-radius: 5px !important;
+  width: fit-content !important;
+  opacity: 0.75;
+}
+
+.main_work_area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 3.5rem 2rem;
+  background-color: #f2f2f2;
+  position: relative;
+  min-height: 85vh;
+}
+
+.bgImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  padding: 3.5rem 2rem;
+}

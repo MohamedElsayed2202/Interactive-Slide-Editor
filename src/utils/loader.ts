@@ -2,7 +2,7 @@ import { redirect, type LoaderFunction } from "react-router";
 import { store } from "../store";
 import { getUser } from "../store/slices/auth/actions";
 import { setToken } from "../store/slices/auth";
-import { getById, list } from "../store/slices/slides/actions";
+import { getById, getMedia, list } from "../store/slices/slides/actions";
 
 const getToken = () => {
   const token = localStorage.getItem("access-token");
@@ -40,5 +40,6 @@ export const authLoader: LoaderFunction = ({ request }) => {
 export const editSlideLoader: LoaderFunction = ({ params }) => {
   const { id } = params;
   store.dispatch(getById(id!));
+  store.dispatch(getMedia(id!));
   return null;
 };
