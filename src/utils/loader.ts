@@ -9,12 +9,17 @@ const getToken = () => {
   return token;
 };
 
-export const indexLoader: LoaderFunction = async () => {
-  const token = getToken() || store.getState().auth.token;
+export const indexLoader: LoaderFunction = async ({request}) => {
+  const url = new URL(request.url);
+  console.log({url});
+  
+  const token = getToken();
   if (!token) {
     return redirect("/auth/login");
   }
   store.dispatch(setToken(token));
+  console.log("heere");
+
   await store.dispatch(getUser());
   store.dispatch(
     list({
