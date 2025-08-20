@@ -56,6 +56,8 @@ export default function WorkArea() {
         x_position: copiedElement.x_position + 10,
         y_position: copiedElement.y_position + 10,
         z_index: copiedElement.z_index,
+        width: copiedElement.width,
+        height: copiedElement.height,
       })
     );
     dispatch(setCopiedElement({} as Element));
