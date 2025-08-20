@@ -15,4 +15,16 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+axiosInstance.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const status = error.response.status;
+    const errorMSG = error.response.data.message;
+    if (status === 401 && errorMSG === "Unauthenticated.") {
+      localStorage.removeItem("access-token");
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

@@ -74,7 +74,7 @@ export interface Slide {
   prev: string;
   slideTime: string | null;
   background: string | null;
-  elements: any[];
+  elements: Element[];
   screenshot: Media | null;
   master: string | null;
 }
@@ -151,9 +151,24 @@ export interface SlideState {
   type: "text" | "image";
   media: Media[];
   elements: Element[];
-  currentElement: Element;
+  currentElementId: string;
   typedText: string;
   backgrounds: Background[];
+  isAdding: boolean;
+  elementToBeAdded: Pick<
+    Element,
+    "x_position" | "y_position" | "z_index" | "width" | "height"
+  >;
+  selectedImage: {
+    id: number | undefined;
+    path: string;
+  };
+  saveState: {
+    error: null | string;
+    loading: boolean;
+    success: boolean;
+  };
+  openModal: boolean;
 }
 
 export interface Element {
@@ -162,7 +177,7 @@ export interface Element {
   type: "text" | "image";
   content: string;
   width?: number;
-  heigh?: number;
+  height?: number;
   x_position: number;
   y_position: number;
   z_index: number;
@@ -181,4 +196,20 @@ export interface ListPayload {
 export interface ExtraModification {
   rejectValue: { message: string };
   state: RootState;
+}
+
+export interface Position {
+  id: string;
+  x: number;
+  y: number;
+}
+
+export interface Size {
+  id: string;
+  width: number;
+  height: number;
+}
+
+export interface ClipboardState {
+  copiedElement: Element;
 }

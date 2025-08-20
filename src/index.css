@@ -18,3 +18,25 @@ body {
 .tox-statusbar {
   display: none !important;
 }
+
+.pagination.justify-content-center {
+  align-items: center;
+}
+
+.page-item,
+.page-item a {
+  color: var(--primary-color) !important;
+  font-family: var(--font-poppins) !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-item a {
+  border: 1px solid #F2F2F2 !important;
+}

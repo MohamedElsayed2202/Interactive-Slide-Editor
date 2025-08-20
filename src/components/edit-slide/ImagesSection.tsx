@@ -1,13 +1,22 @@
 import { Box, Button } from "@mui/material";
 import styles from "./styles.module.css";
-import { useRef } from "react";
+import { useRef, type MouseEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { addMedia } from "../../store/slices/slides/actions";
 import type { Background, Element, Media } from "../../utils/interfaces";
-import { setNewBackground, setNewElement } from "../../store/slices/slides";
+import {
+  setIsAdding,
+  setNewBackground,
+  setNewElement,
+  setSelectedimage,
+} from "../../store/slices/slides";
 
 export default function ImagesSection() {
-  const { record, media } = useAppSelector((store) => store.slide);
+  const {
+    record,
+    media,
+    selectedImage: selectedImageId,
+  } = useAppSelector((store) => store.slide);
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const handleClick = () => {
@@ -30,24 +39,43 @@ export default function ImagesSection() {
       })
     );
   };
-  const handleAddToSlide = (media: Media) => {
+  const handleAddToSlide = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    media: Media
+  ) => {
+    e.stopPropagation();
     const element: Element = {
       id: media.id.toString(),
       slideId: record.id,
       type: "image",
       content: media.path,
-      x_position: 0,
-      y_position: 0,
-      z_index: 0,
+      x_position: 30,
+      y_position: 60,
+      z_index: 1000,
+      width: 200,
+      height: 150,
     };
     dispatch(setNewElement(element));
   };
-  const handleAddAsBackground = (media: Media) => {
+  const handleAddAsBackground = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    media: Media
+  ) => {
+    e.stopPropagation();
     const background: Background = {
       slideId: record.id,
       path: media.path,
     };
     dispatch(setNewBackground(background));
+  };
+  const handleSelectImage = (id: number, path: string) => {
+    dispatch(
+      setSelectedimage({
+        id,
+        path,
+      })
+    );
+    dispatch(setIsAdding(true));
   };
   return (
     <Box component="div" className={styles.images_section}>
@@ -69,20 +97,27 @@ export default function ImagesSection() {
       </Box>
       <Box component={"div"} className={styles.images_container}>
         {media.map((item) => (
-          <Box component={"div"} className={styles.image_wrapper} key={item.id}>
+          <Box
+            component={"div"}
+            className={`${styles.image_wrapper} ${
+              item.id === selectedImageId.id && styles.active_image
+            }`}
+            key={item.id}
+            onClick={() => handleSelectImage(item.id, item.path)}
+          >
             <img src={item.path} />
             <Box component={"div"} className={styles.btns_container}>
               <Button
                 variant="contained"
                 className={styles.image_btn}
-                onClick={() => handleAddToSlide(item)}
+                onClick={(e) => handleAddToSlide(e, item)}
               >
                 Add to slide
               </Button>
               <Button
                 variant="contained"
                 className={styles.image_btn}
-                onClick={() => handleAddAsBackground(item)}
+                onClick={(e) => handleAddAsBackground(e, item)}
               >
                 use as background
               </Button>

@@ -3,7 +3,11 @@ import { Editor } from "@tinymce/tinymce-react";
 import { Box } from "@mui/material";
 import styles from "./styles.module.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
-import { setTypedText } from "../../store/slices/slides";
+import {
+  setCurrentElementId,
+  setIsAdding,
+  setTypedText,
+} from "../../store/slices/slides";
 
 export default function TextEditor() {
   const { typedText } = useAppSelector((store) => store.slide);
@@ -11,6 +15,10 @@ export default function TextEditor() {
   const ref = useRef(null);
   const handleTyping = (content: string) => {
     dispatch(setTypedText(content));
+    if (content !== "") {
+      dispatch(setCurrentElementId(""));
+      dispatch(setIsAdding(true));
+    }
   };
   return (
     <Box component={"div"} className={styles.editor_wrapper}>

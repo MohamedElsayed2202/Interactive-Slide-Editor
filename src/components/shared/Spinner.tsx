@@ -7,6 +7,7 @@ export default function Spinner() {
     getState: getByIdState,
     getMediaState,
     addMediaState,
+    saveState,
   } = useAppSelector((store) => store.slide);
   const { getState } = useAppSelector((store) => store.auth);
   return (
@@ -16,7 +17,8 @@ export default function Spinner() {
         getState.loading ||
         getByIdState.loading ||
         getMediaState.loading ||
-        addMediaState.loading
+        addMediaState.loading ||
+        saveState.loading
       }
       sx={{
         color: "#fff",

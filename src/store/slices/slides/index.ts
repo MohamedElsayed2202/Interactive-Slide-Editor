@@ -2,10 +2,12 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type {
   Background,
   Element,
+  Position,
+  Size,
   Slide,
   SlideState,
 } from "../../../utils/interfaces";
-import { addMedia, getById, getMedia, list } from "./actions";
+import { addMedia, getById, getMedia, list, saveUpdates } from "./actions";
 
 const initialState: SlideState = {
   records: [],
@@ -32,7 +34,7 @@ const initialState: SlideState = {
     loading: false,
     success: false,
   },
-  currentElement: {} as Element,
+  currentElementId: "",
   elements: [],
   typedText: "",
   addMediaState: {
@@ -41,6 +43,19 @@ const initialState: SlideState = {
     success: false,
   },
   backgrounds: [],
+  isAdding: false,
+  elementToBeAdded: {
+    x_position: 0,
+    y_position: 0,
+    z_index: 100,
+  },
+  selectedImage: { id: undefined, path: "" },
+  saveState: {
+    error: null,
+    loading: false,
+    success: false,
+  },
+  openModal: false,
 };
 
 const slideSlice = createSlice({
@@ -57,16 +72,77 @@ const slideSlice = createSlice({
       state.type = payload;
     },
     setNewElement: (state, { payload }: PayloadAction<Element>) => {
+      const found = state.elements.findIndex((e) => e.id === payload.id);
+      if (!found) return;
       state.elements.push(payload);
     },
     setNewBackground: (state, { payload }: PayloadAction<Background>) => {
-      state.backgrounds.push(payload);
+      const filterd = state.backgrounds.filter(
+        (b) => b.slideId !== payload.slideId
+      );
+      state.backgrounds = [...filterd, payload];
     },
-    setCurrentElement: (state, { payload }: PayloadAction<Element>) => {
-      state.currentElement = payload;
+    setCurrentElementId: (state, { payload }: PayloadAction<string>) => {
+      state.currentElementId = payload;
     },
     setTypedText: (state, { payload }: PayloadAction<string>) => {
       state.typedText = payload;
+    },
+    setElementCordinates: (state, { payload }: PayloadAction<Position>) => {
+      const index = state.elements.findIndex((e) => e.id === payload.id);
+      if (index > -1) {
+        state.elements[index].x_position = payload.x;
+        state.elements[index].y_position = payload.y;
+      }
+    },
+    setElementSize: (state, { payload }: PayloadAction<Size>) => {
+      const index = state.elements.findIndex((e) => e.id === payload.id);
+      if (index > -1) {
+        state.elements[index].width = payload.width;
+        state.elements[index].height = payload.height;
+      }
+    },
+    setElementToBeAddedValues: (
+      state,
+      { payload }: PayloadAction<{ name: string; value: any }>
+    ) => {
+      const { name, value } = payload;
+      state.elementToBeAdded = { ...state.elementToBeAdded, [name]: value };
+    },
+    setElementValues: (
+      state,
+      { payload }: PayloadAction<{ name: string; value: any }>
+    ) => {
+      const { name, value } = payload;
+      const index = state.elements.findIndex(
+        (e) => e.id === state.currentElementId
+      );
+      if (index > -1) {
+        state.elements[index] = { ...state.elements[index], [name]: value };
+      }
+    },
+    setIsAdding: (state, { payload }: PayloadAction<boolean>) => {
+      state.isAdding = payload;
+    },
+    resetElementToBeAdded: (state) => {
+      state.elementToBeAdded = {
+        x_position: 0,
+        y_position: 0,
+        z_index: 100,
+      };
+    },
+    deleteElement: (state, { payload }: PayloadAction<string>) => {
+      const newElements = state.elements.filter((e) => e.id !== payload);
+      state.elements = [...newElements];
+    },
+    setSelectedimage: (
+      state,
+      { payload }: PayloadAction<{ id: number | undefined; path: string }>
+    ) => {
+      state.selectedImage = payload;
+    },
+    setOpenModal: (state) => {
+      state.openModal = !state.openModal;
     },
   },
   extraReducers: (builder) => {
@@ -138,6 +214,23 @@ const slideSlice = createSlice({
         state.addMediaState.loading = false;
         state.addMediaState.success = false;
       });
+    builder
+      .addCase(saveUpdates.pending, (state) => {
+        state.saveState.error = null;
+        state.saveState.loading = true;
+        state.saveState.success = false;
+      })
+      .addCase(saveUpdates.fulfilled, (state, { payload }) => {
+        state.record = payload;
+        state.saveState.error = null;
+        state.saveState.loading = false;
+        state.saveState.success = true;
+      })
+      .addCase(saveUpdates.rejected, (state, { payload }) => {
+        state.saveState.error = payload?.message as string;
+        state.saveState.loading = false;
+        state.saveState.success = false;
+      });
   },
 });
 
@@ -145,10 +238,19 @@ export const {
   setPage,
   setName,
   setType,
-  setCurrentElement,
+  setCurrentElementId,
   setNewElement,
   setTypedText,
   setNewBackground,
+  setElementCordinates,
+  setElementSize,
+  setElementToBeAddedValues,
+  setIsAdding,
+  resetElementToBeAdded,
+  setElementValues,
+  setSelectedimage,
+  deleteElement,
+  setOpenModal,
 } = slideSlice.actions;
 const slideReducer = slideSlice.reducer;
 export default slideReducer;

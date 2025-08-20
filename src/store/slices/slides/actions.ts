@@ -8,6 +8,7 @@ import type {
 } from "../../../utils/interfaces";
 import { isAxiosError } from "axios";
 import axiosInstance from "../../../utils/axios-instance";
+import { setOpenModal } from ".";
 
 export const list = createAsyncThunk<ListPayload, FilterData, ErrorResponse>(
   "slides/list",
@@ -21,8 +22,7 @@ export const list = createAsyncThunk<ListPayload, FilterData, ErrorResponse>(
       });
       const { records } = data;
       const { total, per_page } = records;
-      const totalPages = Math.round(total / per_page);
-
+      const totalPages = Math.ceil(total / per_page);
       return {
         records: records.data.sort((a: Slide, b: Slide) => a.rank - b.rank),
         totalPages,
@@ -92,6 +92,23 @@ export const addMedia = createAsyncThunk<
     }
     const record = data.message;
     return record;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return rejectWithValue(error?.response?.data);
+    }
+    return rejectWithValue({ message: "An unknown error occurred" });
+  }
+});
+
+export const saveUpdates = createAsyncThunk<
+  Slide,
+  { id: string; slide: Slide },
+  ErrorResponse
+>("slides/save", async ({ id, slide }, { rejectWithValue, dispatch }) => {
+  try {
+    await axiosInstance.post(`save-slide-dummy/${id}`);
+    dispatch(setOpenModal());
+    return slide;
   } catch (error) {
     if (isAxiosError(error)) {
       return rejectWithValue(error?.response?.data);
