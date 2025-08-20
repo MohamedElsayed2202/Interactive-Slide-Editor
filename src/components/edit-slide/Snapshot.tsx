@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 export default function Snapshot() {
   const { record, openModal } = useAppSelector((store) => store.slide);
-  const { background, elements } = record;
+  const { background, elements = [] } = record;
   const dispatch = useAppDispatch();
   const handleClose = () => {
     dispatch(setOpenModal());

@@ -14,7 +14,7 @@ cd <project-name>
 ```bash
 npm install
 # or
-yarn install
+yarn
 ```
 
 ### 3. Run the Vite Dev Server
